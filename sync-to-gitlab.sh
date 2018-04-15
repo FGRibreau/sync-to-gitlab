@@ -1,19 +1,15 @@
 #!/usr/bin/env zsh
 
-# requires jq.node - https://github.com/FGRibreau/jq.node
-# npm i jq.node -g
-
-# https://gitlab.com/profile
+# see: https://gitlab.com/profile
 USER_ID=PLEASE_SET_ME
 USER_NAME=PLEASE_SET_ME
 
-# https://gitlab.com/profile/personal_access_tokens
+# see: https://gitlab.com/profile/personal_access_tokens
 PRIVATE_TOKEN=PLEASE_SET_ME
 
 # find user namespace id
 ALL_NAMESPACE=$(curl -k --header "PRIVATE-TOKEN: $PRIVATE_TOKEN" "https://gitlab.com/api/v3/namespaces")
 NAMESPACE_ID=$(echo $ALL_NAMESPACE | jqn --color=false "find({kind:'user', name: '$USER_NAME'}) | get('id')")
-# exit
 
 for directory in * ; do
   if [ -d "$directory" ]; then
@@ -35,12 +31,3 @@ for directory in * ; do
     )
   fi
 done
-
-# list file
-# init .git if not exists
-# create project with name on gitlab
-# git add *
-# git commit -m 'init'
-# if error => go one (the project still exists)
-# git remote add
-# git push gitlab-backup
